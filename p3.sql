@@ -79,6 +79,8 @@ insert into dry_beans (features_seq) select cube(ARRAY[
   ShapeFactor3,
   ShapeFactor4
   ]) from dry_beans_tmp;
+-- insert into dry_beans (features_seq) select features_seq from dry_beans;
+-- insert into dry_beans (features_seq) select features_seq from dry_beans;
 
 update dry_beans set features_idx = features_seq;
 create index if not exists idx_dy_beans_features_gist on dry_beans using gist (features_idx);
