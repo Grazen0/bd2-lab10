@@ -33,16 +33,55 @@ from vectors cross join q
 order by vector_gist <-> q.query
 limit 5;
 
+create table if not exists dry_beans_tmp (
+  Area numeric,
+  Perimeter numeric,
+  MajorAxisLength numeric,
+  MinorAxisLength numeric,
+  AspectRation numeric,
+  Eccentricity numeric,
+  ConvexArea numeric,
+  EquivDiameter numeric,
+  Extent numeric,
+  Solidity numeric,
+  roundness numeric,
+  Compactness numeric,
+  ShapeFactor1 numeric,
+  ShapeFactor2 numeric,
+  ShapeFactor3 numeric,
+  ShapeFactor4 numeric,
+  Class varchar
+);
+
+\copy dry_beans_tmp from 'dry_beans.csv' delimiter ',' csv header;
+
 create table if not exists dry_beans (
   id serial primary key,
   features_seq cube,
   features_idx cube
 );
 
-insert into dry_beans (features_seq) select features_seq from dry_beans;
+insert into dry_beans (features_seq) select cube(ARRAY[
+  Area,
+  Perimeter,
+  MajorAxisLength,
+  MinorAxisLength,
+  AspectRation,
+  Eccentricity,
+  ConvexArea,
+  EquivDiameter,
+  Extent,
+  Solidity,
+  roundness,
+  Compactness,
+  ShapeFactor1,
+  ShapeFactor2,
+  ShapeFactor3,
+  ShapeFactor4
+  ]) from dry_beans_tmp;
 
-create index if not exists idx_dy_beans_features_gist on dry_beans using gist (features_idx);
 update dry_beans set features_idx = features_seq;
+create index if not exists idx_dy_beans_features_gist on dry_beans using gist (features_idx);
 
 explain analyze
 with q as (

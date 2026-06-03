@@ -1,3 +1,4 @@
 DryBeanDataset/Dry_Bean_Dataset.xlsx filter=lfs diff=lfs merge=lfs -text
 DryBeanDataset/Dry_Bean_Dataset.arff filter=lfs diff=lfs merge=lfs -text
 DryBeanDataset/Dry_Bean_Dataset.txt filter=lfs diff=lfs merge=lfs -text
+dry_beans.csv filter=lfs diff=lfs merge=lfs -text
