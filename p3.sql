@@ -11,7 +11,7 @@ insert into vectors(vector_lineal)
 select cube(ARRAY[
   round(random()*1000),
   round(random()*1000)
-  ]) from generate_series(1, 1000);
+  ]) from generate_series(1, 100000);
 
 update vectors set vector_gist = vector_lineal;
 
