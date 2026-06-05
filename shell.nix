@@ -13,6 +13,7 @@ pkgs.mkShell {
         matplotlib
         dlib
         face-recognition
+        rtree
       ]
     ))
   ];
