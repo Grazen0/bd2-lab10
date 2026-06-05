@@ -3,7 +3,7 @@
 }:
 pkgs.mkShell {
   buildInputs = [
-    (pkgs.python314.withPackages (
+    (pkgs.python312.withPackages (
       ps: with ps; [
         pip
         pandas
@@ -11,6 +11,8 @@ pkgs.mkShell {
         scipy
         openpyxl
         matplotlib
+        dlib
+        face-recognition
       ]
     ))
   ];
