@@ -31,6 +31,7 @@ if __name__ == "__main__":
     with conn.cursor() as cursor:
         cursor.execute(
             """
+            explain analyze
             select
             id, name, embedding,
             (%s::vector <=> embedding) as distance
@@ -61,6 +62,7 @@ if __name__ == "__main__":
     with conn.cursor() as cursor:
         cursor.execute(
             """
+            explain analyze
             select
             id, name, embedding,
             (%s::vector <-> embedding) as distance
