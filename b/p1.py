@@ -1,5 +1,6 @@
 import glob
 import os
+import random
 
 import face_recognition
 import psycopg2
@@ -8,8 +9,13 @@ import p0
 
 
 def connect_db():
-    conn = psycopg2.connect()
+    conn = psycopg2.connect(
+        dbname="postgres", user="postgres", password="123", host="localhost"
+    )
     return conn
+
+
+LIMIT = 1000
 
 
 if __name__ == "__main__":
@@ -20,19 +26,20 @@ if __name__ == "__main__":
 
     count = 0
 
-    for path in glob.iglob(os.path.join(p0.DATASET_PATH, "**", "*.jpg")):
-        if count >= 1000:
-            break
+    print("Leyendo directorio...")
+    paths = list(glob.iglob(os.path.join(p0.DATASET_PATH, "**", "*.jpg")))
 
-        count += 1
+    print("Sacando sample...")
+    path_sample = random.sample(paths, 1000)
 
+    print("Insertando embeddings...")
+
+    for path in path_sample:
         name = path.split("/")[-2]
-
         image = face_recognition.load_image_file(path)
-
         encodings = face_recognition.face_encodings(image)
+
         if not encodings:
-            print(f"Skipping {name}")
             continue
 
         embedding = encodings[0].tolist()
