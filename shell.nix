@@ -14,6 +14,7 @@ pkgs.mkShell {
         dlib
         face-recognition
         rtree
+        psycopg2
       ]
     ))
   ];
